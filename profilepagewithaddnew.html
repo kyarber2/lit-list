@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <title>Add to LiTLiST</title>
+  
+  <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
+  <!-- Moment.js Reference -->
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+  
+  <!-- Bootstrap CDN-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+  <!-- Firebase Reference -->
+  <script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+
+   <!-- lodash -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+  <script type="text/javascript" src=./assets/javascript/api.js></script>
+
+  <!-- Animate -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+  
+  <!-- Style -->
+  <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+  <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="assets/css/cat_and_people.css">
+
+</head>
+
+<body>
+
+  <!-- JUMBO -->
+  <div class="container">
+    <div class="jumbotron">
+      <div class="row">
+        <h1 class="animated pulse"><a href="people.html">LiTLiST</a></h1>
+          <div id="pplRows" class="row">
+            <!-- dynamically created images go here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="container input-container">
+  <div class="row">
+    <div class="col-lg-12">
+       <div class="panel panel-default">
+          <div class="panel-heading">
+             <h4 class="panel-title">Add Item to LiTLiST</h4>
+          </div>        
+          
+          <div class="panel-body">
+            <form id="search-item-form">
+              <div>
+                <label for="profPgCat">Category</label>
+                <select class="form-control" name="profPgCat" id="prodCategory">
+                  <option value="Books">Books</option>
+                  <option value="Movies">Movies</option>
+                  <option value="Beauty">Beauty</option>
+                  <option value="Health">Health</option>
+                  <option value="Sports">Sports</option>
+                  <option value="Home">Home</option>
+                  <option value="Toys">Toys</option>
+                </select>
+              </div>
+              <div>
+                <label for="prodAdd">Type in your Favourite Product</label>
+                <input class="form-control" name="proAdd" type="text" id="prodName">
+              </div>
+              <div>
+                <label for="revAdd">Why is this your Favourite?</label>
+                <input class="form-control" name="revAdd" type="text" id="prodReview">
+              </div>                
+              <button class="btn btn-primary" name="prodSearch" type="submit">Search
+                <span class="glyphicon glyphicon-search" id="magniGlass" aria-hidden="true"></span>
+              </button>
+            </form>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+<div id="search-results"></div>
+
+<div class="row">
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+      <div class="container social-links">
+        <a href="https://www.facebook.com" class="ico-anim social-facebook" title="Facebook" target="_blank"></a>
+        <span class="icon-facebook">
+          <picture>
+            <source srcset="./assets/images/facebook.png" media="(min-width: 600px)">
+          <img src="./assets/images/facebook.png"" alt="MDN">
+          </picture>
+        </span>
+        <a href="https://www.instagram.com" class="ico-anim social-instagam" title="Instagram" target="_blank"></a>
+        <span class="icon-instagram">
+            <picture>
+              <source srcset="./assets/images/instagram.png" media="(min-width: 600px)">
+            <img src="./assets/images/instagram.png"" alt="MDN">
+            </picture>
+        </span>
+        <a href="https://www.twitter.com" class="ico-anim social-twitter" title="Twitter" target="_blank"></a>
+        <span class="icon-facebook">
+          <picture>
+            <source srcset="./assets/images/twitter.png" media="(min-width: 600px)">
+            <img src="./assets/images/twitter.png"" alt="MDN">
+          </picture>
+        </span>
+        <p class="text-muted">Copyright &copy; 2017 Team HealthNut Inc.</p>
+      </div>
+  </footer>
+</div>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script type="text/javascript">
+ // @TODO: Remove this line after session storage/login page is connected to this one:
+ 
+function createModal(title, formId, formData) {
+  return $("<div>").modal().addClass("modal fade").append(
+    $("<form>").attr("id", formId).append(
+        $("<div>").addClass("modal-dialog").append(
+            $("<div>").addClass("modal-content").append(
+                $("<div>").addClass("modal-header").append(
+                    $("<button>").addClass("close").data("dismiss", "modal").attr("aria-hidden", "true")
+                ).append(
+                    $("<h4>").addClass("modal-title").text(title)
+                )
+            ).append(
+              $("<div>").addClass("modal-body").append(
+                  formData
+                )
+            ).append(
+                $("<div>").addClass("modal-footer").append(
+                  $("<button>").addClass("btn btn-default").data("dismiss", "modal").text("close")
+                ).append(
+                    $("<button>").addClass("btn btn-primary").text("Save changes")
+                )
+            )
+         )  
+     )
+  )                   
+};
+
+
+function createUserForm() {
+  createModal("Login", "Create your Profile", $("<div class='col-lg-12'><div class= 'panel-body' id='createProfile'><div class='form-group'><label for='userName'>Name</label><input class='form-control' id='userName' type='text'></div><div class='form-group'><label for='userCity'>Your Location</label><input class='form-control' id='userCity' type='text'></div></div>"))
+  .appendTo('body')
+
+};
+
+ // createUserForm();
+
+ // sessionStorage.setItem('uid','-KuqD0WCyJsJqpjiKCAD');
+
+  var config = {
+    apiKey: "AIzaSyD43oZfYX_igbsUwjewJtrNGQr4bpCrzBk",
+    authDomain: "litlist-306a8.firebaseapp.com",
+    databaseURL: "https://litlist-306a8.firebaseio.com",
+    projectId: "litlist-306a8",
+    storageBucket: "litlist-306a8.appspot.com",
+    messagingSenderId: "188274961247"
+  };
+
+  firebase.initializeApp(config);
+
+  var database = firebase.database();
+
+
+  function addItem(category, name, review, URI) {
+    var postObject = {
+      nitemCategory: category,
+      nitemName: name,
+      nitemReview: review,
+      nitemId: URI,
+    };
+    console.log("Post obj: ", postObject);
+    var uid = localStorage.getItem("userId");
+
+    if (typeof uid == "string" && uid.length) {
+      // Write the new post's data simultaneously in the posts list and the user's post list.
+      console.log(uid);
+      return firebase.database().ref('/users/' + uid + "/items").push(postObject);
+    } else {
+      // Cannot add item, no user id!
+      console.log('Cannot Add Item - No User');
+      return false;
+    }
+  };
+
+  // "Add List Item" click event
+  $("#search-item-form").on("submit", function(event) {
+    event.preventDefault();
+    console.log($(this).find('[name="proAdd"]'));
+    // @TODO: Call the "create modal function", pass in the below for the body of the modal
+    // createModal('Search Results',  )
+    getShopDotComProduct($(this).find('[name="proAdd"]').val().trim(), "#search-results", function(e) {
+      console.log("Clicked! Show Review Modal!");
+      console.log($(this).data("itemID"));
+      console.log($(this).data("itemURI"));
+      console.log($("#prodCategory").val());
+      addItem($("#prodCategory").val(), $("#prodName").val(), $("#prodReview").val(), $(this).data("itemURI"));
+      // @TODO: Add the code here to show the Review Form in a Modal
+      // Be sure to account for the "submit" event of the Review Modal Form (the #write-review-form needs to already exist)
+    });
+  });
+
+  // Save Item when Review Form Submitted
+  $("#write-review-form").on("submit", function(event) {
+
+    // prevent the form from submitting on default
+    event.preventDefault();
+
+    // using postData object to store the name and the movie.
+    if (false !== addItem(
+      $(this).find('[name="profPgCat"]').val().trim(),
+      $(this).find('[name="proAdd"]').val().trim(),
+      $(this).find('[name="revAdd"]').val().trim(),
+      $(this).find('[name="itemURI"]').val().trim()
+    )) {
+
+      var uid = localStorage.getItem("userId");
+      database.ref('/users/' + uid + "/items").limitToLast(1).on("child_added", function(snap){
+        console.log('Last Item Added: ' + snap.key, snap.val());
+        // @TODO: Write the snap.val() items to the page somewhere.
+
+      });
+
+    }
+
+  });
+
+  $(document).ready(function() {
+    var uName = localStorage.getItem("userName");
+    var uImg = localStorage.getItem("userImg");
+    $("#profPgName").html(uName);
+    $("#imgSpot").attr('src', uImg);
+  })
+  
+// Load names on images to header
+database.ref("/users").on("value", function(childSnapshot) {
+  console.log(childSnapshot.val()); 
+
+  // Store everything into a variable.
+  var userName = localStorage.getItem("userName");
+  var userImage = localStorage.getItem("userImg");
+  var userGuid = localStorage.getItem("userId");
+
+  console.log("username: " + userName + " userGuid: " + userGuid)
+
+  $("#pplRows").append(
+    $("<div>").addClass("col-sm-4 col-xs-6 col-lg-3")
+      .append(
+        $("<h3>").text(userName).addClass("ppl"))
+      .append(
+        $("<img>").addClass("img img-thumbnail img-responsive center-block").attr("src", userImage).attr('id', userGuid).attr('val',userName))
+      );
+
+
+}); // end of fb listener
+
+ </script>
+
+<!-- <script type="text/javascript" src="assets/javascript/firebaseCalls.js"></script> -->
+
+
+</body>
+</html>
